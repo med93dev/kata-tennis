@@ -36,9 +36,6 @@ curl -X POST "http://localhost:8080/api/v1/tennis/play" \
      -H "Content-Type: application/json" \
      -d '{"sequence":"ABABAA"}'
 
-# Réinitialiser le jeu
-curl -X POST "http://localhost:8080/api/v1/tennis/reset"
-
 # Consulter l'historique des parties terminées
 curl "http://localhost:8080/api/v1/tennis/history"
 ```
