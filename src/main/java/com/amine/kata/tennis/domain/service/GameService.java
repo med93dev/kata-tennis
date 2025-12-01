@@ -247,12 +247,12 @@ public class GameService implements GameUseCase {
     }
 
     private void logSaveSuccess(GameEntity gameEntity) {
-        Map<String, Object> output = Map.of(
-                "gameId", gameEntity.getId(),
-                "winner", gameEntity.getWinner(),
-                "finalScore", gameEntity.getFinalScore(),
-                "messageCount", gameEntity.getMessages().size()
-        );
+        Map<String, Object> output = new HashMap<>();
+        output.put("gameId", gameEntity.getId() != null ? gameEntity.getId() : "N/A");
+        output.put("winner", gameEntity.getWinner());
+        output.put("finalScore", gameEntity.getFinalScore());
+        output.put("messageCount", gameEntity.getMessages().size());
+
         logger.logOperationSuccess("SAVE_GAME_HISTORY", output);
     }
 

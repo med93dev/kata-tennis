@@ -111,6 +111,9 @@ class GameServiceTest {
     @Test
     @DisplayName("Devrait extraire le bon gagnant de l'historique")
     void shouldExtractCorrectWinnerFromHistory() {
+        // Mock the save method to return the entity for this test
+        when(gamePort.save(any(GameEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
         GameRequest request = new GameRequest("ABABAA");
         List<GameResponse> result = gameService.playSequence(request);
         assertNotNull(result);
@@ -118,6 +121,9 @@ class GameServiceTest {
         GameResponse lastResponse = result.get(result.size() - 1);
         assertEquals("The Player A wins the game", lastResponse.score());
         assertEquals("GameWon", lastResponse.state());
+
+        // Verify that save was called
+        verify(gamePort, times(1)).save(any(GameEntity.class));
     }
 
     @Test

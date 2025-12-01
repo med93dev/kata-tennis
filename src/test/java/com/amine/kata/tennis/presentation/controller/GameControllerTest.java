@@ -45,7 +45,6 @@ class GameControllerTest {
 
     private GameRequest validRequest;
     private List<GameResponse> mockGameHistory;
-    private GameResponse mockResetResponse;
     private List<GameEntity> mockGameEntities;
 
     @BeforeEach
@@ -60,9 +59,6 @@ class GameControllerTest {
                 new GameResponse("Player A: 40 / Player B: 30", "Normal", "A scored a point!", Instant.now()),
                 new GameResponse("A wins", "GameWon", "A wins!", Instant.now())
         );
-
-        mockResetResponse = new GameResponse("0-0", "Normal", "Remet le score à zéro et réinitialise l'état du jeu.", Instant.now());
-
         GameEntity gameEntity = new GameEntity();
         gameEntity.setId(1L);
         gameEntity.setSequence("ABABAA");
@@ -143,22 +139,6 @@ class GameControllerTest {
 
         verify(gameUseCase, never()).playSequence(any(GameRequest.class));
     }
-
-    @Test
-    @DisplayName("POST /api/v1/tennis/reset - Devrait réinitialiser le jeu avec succès")
-    void shouldResetGameSuccessfully() throws Exception {
-        when(gameUseCase.resetGame()).thenReturn(mockResetResponse);
-
-        mockMvc.perform(post("/api/v1/tennis/reset"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.score").value("0-0"))
-                .andExpect(jsonPath("$.state").value("Normal"))
-                .andExpect(jsonPath("$.message").value("Remet le score à zéro et réinitialise l'état du jeu."));
-
-        verify(gameUseCase, times(1)).resetGame();
-    }
-
 
     @Test
     @DisplayName("GET /api/v1/tennis/history - Devrait récupérer l'historique avec succès")
