@@ -2,6 +2,7 @@ package com.amine.kata.tennis.application.service;
 
 import com.amine.kata.tennis.application.port.out.GamePort;
 import com.amine.kata.tennis.domain.exception.InvalidSequenceException;
+import com.amine.kata.tennis.domain.service.GameService;
 import com.amine.kata.tennis.infrastructure.entity.GameEntity;
 import com.amine.kata.tennis.presentation.dto.GameRequest;
 import com.amine.kata.tennis.presentation.dto.GameResponse;
